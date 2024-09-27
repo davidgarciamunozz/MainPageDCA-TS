@@ -23,7 +23,14 @@ class AppContainer extends HTMLElement {
 
     connectedCallback() {
         this.render();
-        //mostrrar la bara de navegacion
+
+        // Escuchar el evento personalizado "new-post"
+        this.shadowRoot?.addEventListener('new-post', (event: Event) => {
+            const { comment, author } = (event as CustomEvent).detail;
+            this.addPost(comment, author);
+        });
+
+        //mostrar la bara de navegacion
         const navbar = new Navbar();
         //mostrar el creador de posts
         const postCreator = new PostCreator();
@@ -31,18 +38,41 @@ class AppContainer extends HTMLElement {
         container?.appendChild(postCreator);
         //mostrar los posts
         this.posts.forEach((post) => {
-            const postComponent = new Post();
-            const container = this.shadowRoot?.querySelector('.container');
-            postComponent.setAttribute('post', post.post);
-            postComponent.setAttribute('comment', post.comment);
-            if (post.author) {
-                postComponent.setAttribute('author', post.author);
-            }
-            if (post.likes) {
-                postComponent.setAttribute('likes', post.likes.toString());
-            }
-            container?.appendChild(postComponent);
+            this.createPostComponent(post);
         });
+    }
+     // Método para añadir un nuevo post dinámicamente
+     addPost(comment: string, author: string) {
+        const postComponent = new Post();
+        postComponent.setAttribute('comment', comment);
+        postComponent.setAttribute('author', author);
+        postComponent.setAttribute('likes', '0'); // Inicialmente con 0 likes
+
+        const container = this.shadowRoot?.querySelector('.container');
+        const postCreator = container?.querySelector('post-creator');
+
+        // Insertar el nuevo post después del PostCreator
+        if (postCreator && container) {
+            container.insertBefore(postComponent, postCreator.nextSibling);
+        } else {
+            container?.appendChild(postComponent);
+        }
+    }
+
+    // Método para crear un componente post existente
+    createPostComponent(post: { post: string; comment: string, author?: string, likes?: number }) {
+        const postComponent = new Post();
+        postComponent.setAttribute('post', post.post);
+        postComponent.setAttribute('comment', post.comment);
+        if (post.author) {
+            postComponent.setAttribute('author', post.author);
+        }
+        if (post.likes) {
+            postComponent.setAttribute('likes', post.likes.toString());
+        }
+
+        const container = this.shadowRoot?.querySelector('.container');
+        container?.appendChild(postComponent);
     }
 
     render () {

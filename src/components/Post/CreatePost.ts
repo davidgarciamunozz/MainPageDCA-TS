@@ -1,6 +1,5 @@
 class PostCreator extends HTMLElement {
     private textArea: HTMLTextAreaElement | null = null;
-    private authorInput: HTMLInputElement | null = null;
     private submitButton: HTMLButtonElement | null = null;
 
     constructor() {
@@ -96,22 +95,22 @@ class PostCreator extends HTMLElement {
     }
 
     handleSubmit() {
-        const author = this.authorInput?.value;
         const comment = this.textArea?.value;
+        const author = 'test user'; // Autor predeterminado por ahora
 
-        if (author && comment) {
-            const newPostEvent = new CustomEvent('newpost', {
-                detail: { author, comment },
-                bubbles: true,
-                composed: true
+        if ( comment) {
+              // Emitir evento personalizado con los datos del nuevo post
+              const newPostEvent = new CustomEvent('new-post', {
+                detail: { comment, author },
+                bubbles: true, // Permitir que el evento se propague al shadow DOM
             });
+
             this.dispatchEvent(newPostEvent);
 
-            // Limpiar los campos después de enviar
-            if (this.authorInput) this.authorInput.value = '';
+            // Limpiar textarea después de publicar
             if (this.textArea) this.textArea.value = '';
         } else {
-            alert('Por favor, completa todos los campos.');
+            alert('Por favor, escribe algo antes de publicar');
         }
     }
 }
