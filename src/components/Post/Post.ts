@@ -65,7 +65,7 @@ class Post extends HTMLElement {
                         width: 40px;
                         height: 40px;
                         border-radius: 50%;
-                        background-color: #1976d2;
+                        background-color: black;
                         color: white;
                         display: flex;
                         align-items: center;
