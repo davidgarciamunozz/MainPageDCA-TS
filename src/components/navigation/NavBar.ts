@@ -19,6 +19,8 @@ class Navbar extends HTMLElement {
     toggleMobileMenu() {
         this.mobileMenuOpen = !this.mobileMenuOpen;
         this.render();
+        this.addEventListeners(); 
+        console.log(this.mobileMenuOpen);
     }
 
     render() {
@@ -65,6 +67,7 @@ class Navbar extends HTMLElement {
                     .nav-buttons {
                         display: flex;
                         gap: 1rem;
+
                     }
                     .nav-button {
                         background: none;
@@ -74,9 +77,10 @@ class Navbar extends HTMLElement {
                         color: #333;
                         display: flex;
                         align-items: center;
+                        text-decoration: none;
                     }
                     .nav-button:hover {
-                        text-decoration: underline;
+                        text-decoration: none;
                     }
                     .icon {
                         width: 20px;
