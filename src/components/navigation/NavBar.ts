@@ -1,4 +1,7 @@
 class Navbar extends HTMLElement {
+    
+    // declaracion de propiedad en una clase de typescript, propiedad privada
+    // Encapsulamiento de datos
     private mobileMenuOpen: boolean = false;
 
     constructor() {
