@@ -54,6 +54,7 @@ class Post extends HTMLElement {
                         border-radius: 8px;
                         margin-bottom: 20px;
                         padding: 16px;
+                        max-width: 100%;
                         background-color: white;
                     }
                     .post-header {
@@ -78,6 +79,9 @@ class Post extends HTMLElement {
                     }
                     .comment {
                         margin-bottom: 12px;
+                        overflow-wrap: break-word;
+                        word-wrap: break-word; 
+                        hyphens: auto; 
                     }
                     .actions {
                         display: flex;
